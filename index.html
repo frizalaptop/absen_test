@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Save Web Form Data to Spreadsheets - Contact Form</title>
-</head>
-<body>
-  <form id="myForm" name="myform">
-    <label>Nama lengkap</label>
-    <br/>
-    <input name="NAMA" required/>
-    <br/>
-    <label>NIP</label>
-    <br/>
-    <input name="NIP" required/>
+  <head>
+    <title>Save Web Form Data to Spreadsheets - Contact Form</title>
+  </head>
+  <body>
+    <form id="myForm" name="myform">
+      <label>Nama lengkap</label>
+      <br />
+      <input name="NAMA" required />
+      <br />
+      <label>NIP</label>
+      <br />
+      <input name="NIP" required />
+    </form>
+    <button type="button" id="postData">Absen</button>
+    <button type="button" id="deleteData">Delete All</button>
 
-  </form>
-  <button type="submit" id="postData">Absen</button>
-  <button type="button" id="getData">Get All</button>
+    <div class="allData">
+      <table>
+        <thead>
+          <tr>
+            <th>Nama</th>
+            <th>Kehadiran</th>
+          </tr>
+        </thead>
 
-  <script src="script.js"></script>
-</body>
+        <tbody></tbody>
+      </table>
+    </div>
+    <script src="script.js"></script>
+  </body>
 </html>
