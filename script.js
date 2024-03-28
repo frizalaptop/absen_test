@@ -1,5 +1,5 @@
 const postURL =
-  "https://script.google.com/macros/s/AKfycbzWji4Lnqm7wJ8SHQx2IJSHLLu3P7f9-HnHXVoq4cgExlDGddB-aI8qyn6xJcld9BHIIA/exec";
+  "https://script.google.com/macros/s/AKfycbxec1ZFA2i-mRxVmeS8BUM-SQ7dJzfaTWMKyBRvA_nbkEeyqT4pi6OB7YlrfzdszVxO6Q/exec";
 const deleteURL =
   "https://script.google.com/macros/s/AKfycbw8bkuwh1gGNUBZzd37xssp04QqmNa0GCNhe1hqPt_jq0cLq43EMBkEyuGvgBkJg-pM4w/exec";
 
@@ -9,6 +9,8 @@ const deleteBtn = document.querySelector("#deleteData");
 const tableBody = document.querySelector("tbody");
 
 document.addEventListener("DOMContentLoaded", async () => {
+  setInterval(updateClock, 1000);
+
   try {
     const precences = await generatePrecences();
     generateTable(precences);
@@ -17,6 +19,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+function updateClock() {
+  const now = new Date();
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+  let seconds = now.getSeconds();
+
+  hours = (hours < 10 ? "0" : "") + hours;
+  minutes = (minutes < 10 ? "0" : "") + minutes;
+  seconds = (seconds < 10 ? "0" : "") + seconds;
+
+  const timeString = hours + ":" + minutes + ":" + seconds;
+
+  document.getElementById("clock").innerText = timeString;
+}
+
 async function generatePrecences() {
   const response = await fetch(postURL, {
     method: "POST",
@@ -24,6 +41,7 @@ async function generatePrecences() {
   });
 
   const data = await response.json();
+  console.log(data);
   return data.result;
 }
 
