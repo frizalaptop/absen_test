@@ -1,7 +1,5 @@
 const postURL =
   "https://script.google.com/macros/s/AKfycbxtbjEktnYKbOOHlktiwJYrPpRCqvbcdkaQr_6obEhe8LpFkMLSInc2ATZ99AYrVGxFOg/exec";
-const deleteURL =
-  "https://script.google.com/macros/s/AKfycbw8bkuwh1gGNUBZzd37xssp04QqmNa0GCNhe1hqPt_jq0cLq43EMBkEyuGvgBkJg-pM4w/exec";
 
 const form = document.forms["myform"];
 const postBtn = document.querySelector("#postData");
@@ -21,6 +19,30 @@ document.addEventListener("DOMContentLoaded", async () => {
     alert("Belum ada data");
   }
 });
+
+postBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
+  try {
+    const precences = await generatePrecences();
+    createHeadTable(precences.date);
+    createRowTable(precences.result);
+    createValueTable(precences.result, precences.date);
+  } catch (error) {
+    alert("Belum ada data");
+  } finally {
+    form.querySelector('[name="ID"]').value = "";
+  }
+});
+
+async function generatePrecences() {
+  const response = await fetch(postURL, {
+    method: "POST",
+    body: new FormData(form),
+  });
+
+  const data = await response.json();
+  return { result: data.result, date: data.date };
+}
 
 function updateClock() {
   const now = new Date();
@@ -62,16 +84,6 @@ function generateDate() {
   document.getElementById("date").innerHTML = formattedDate;
 }
 
-async function generatePrecences() {
-  const response = await fetch(postURL, {
-    method: "POST",
-    body: new FormData(form),
-  });
-
-  const data = await response.json();
-  return { result: data.result, date: data.date };
-}
-
 function createHeadTable(date) {
   const tableHead = document.getElementById("row-header");
   tableHead.innerHTML = "<th>NIP</th><th>NAMA</th>";
@@ -84,7 +96,7 @@ function createHeadTable(date) {
   }
 }
 
-function createRowTable(precences, date) {
+function createRowTable(precences) {
   const tableRows = precences.reduce((accumulator, current) => {
     return accumulator + `<tr class="values"></tr>`;
   }, "");
@@ -107,31 +119,4 @@ function createValueTable(precences, date) {
   });
 }
 
-function clearTable() {
-  tableBody.innerHTML = "";
-  console.log("empty");
-}
 
-postBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
-  try {
-    const precences = await generatePrecences();
-    createHeadTable(precences.date);
-    createRowTable(precences.result);
-    createValueTable(precences.result, precences.date);
-  } catch (error) {
-    alert("Belum ada data");
-  } finally {
-    form.querySelector('[name="ID"]').value = "";
-  }
-});
-
-// deleteBtn.addEventListener("click", async (e) => {
-//   e.preventDefault();
-//   await fetch(deleteURL, {
-//     method: "POST",
-//     // body: new FormData(form),
-//   });
-
-//   clearTable();
-// });
