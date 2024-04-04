@@ -4,27 +4,27 @@
     <title>Save Web Form Data to Spreadsheets - Contact Form</title>
   </head>
   <body>
+    <div class="clock-container">
+      <p id="clock"></p>
+    </div>
+    <div class="date-container">
+      <p id="date"></p>
+    </div>
     <form id="myForm" name="myform">
-      <label>Nama lengkap</label>
+      <label>Masukan NIP</label>
       <br />
-      <input name="NAMA" required />
+      <input name="ID" required />
       <br />
-      <label>NIP</label>
-      <br />
-      <input name="NIP" required />
     </form>
+
     <button type="button" id="postData">Absen</button>
-    <button type="button" id="deleteData">Delete All</button>
+    <!-- <button type="button" id="deleteData">Delete All</button> -->
 
     <div class="allData">
-      <table>
+      <table border="1" cellpadding="5" cellspacing="0">
         <thead>
-          <tr>
-            <th>Nama</th>
-            <th>Kehadiran</th>
-          </tr>
+          <tr id="row-header"></tr>
         </thead>
-
         <tbody></tbody>
       </table>
     </div>
