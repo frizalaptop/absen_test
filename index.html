@@ -7,34 +7,24 @@
     <div class="clock-container">
       <p id="clock"></p>
     </div>
+    <div class="date-container">
+      <p id="date"></p>
+    </div>
     <form id="myForm" name="myform">
-      <label>NIP</label>
+      <label>Masukan NIP</label>
       <br />
-      <input name="NIP" required />
+      <input name="ID" required />
       <br />
-      <label>Keterangan</label>
-      <br />
-      <select id="KEHADIRAN">
-        <option value="H" selected>Hadir</option>
-        <option value="S">Sakit</option>
-        <option value="C">Cuti</option>
-      </select>
     </form>
-    <br />
-    <br />
-    <br />
+
     <button type="button" id="postData">Absen</button>
     <!-- <button type="button" id="deleteData">Delete All</button> -->
 
     <div class="allData">
-      <table>
+      <table border="1" cellpadding="5" cellspacing="0">
         <thead>
-          <tr>
-            <th>Nama</th>
-            <th>Kehadiran</th>
-          </tr>
+          <tr id="row-header"></tr>
         </thead>
-
         <tbody></tbody>
       </table>
     </div>
