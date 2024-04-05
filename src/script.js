@@ -1,14 +1,26 @@
+import "table2excel";
+const Table2Excel = window.Table2Excel;
+const table2excel = new Table2Excel();
+
 const postURL =
   "https://script.google.com/macros/s/AKfycbxtbjEktnYKbOOHlktiwJYrPpRCqvbcdkaQr_6obEhe8LpFkMLSInc2ATZ99AYrVGxFOg/exec";
 
 const form = document.forms["myform"];
 const postBtn = document.querySelector("#postData");
-const deleteBtn = document.querySelector("#deleteData");
+const downloadBtn = document.querySelector("#download");
 const tableBody = document.querySelector("tbody");
+const dateElement = document.getElementById("date");
 
 document.addEventListener("DOMContentLoaded", async () => {
   setInterval(updateClock, 1000);
   generateDate();
+
+  document.addEventListener('keydown', (event)=>{
+    if(event.key === 'Enter'){
+      event.preventDefault()
+      postBtn.click()
+    }
+  })
 
   try {
     const precences = await generatePrecences();
@@ -16,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     createRowTable(precences.result);
     createValueTable(precences.result, precences.date);
   } catch (error) {
-    alert("Belum ada data");
+    console.log(error.message);
   }
 });
 
@@ -28,10 +40,16 @@ postBtn.addEventListener("click", async (e) => {
     createRowTable(precences.result);
     createValueTable(precences.result, precences.date);
   } catch (error) {
-    alert("Belum ada data");
+    console.log(error.message);
   } finally {
     form.querySelector('[name="ID"]').value = "";
   }
+});
+
+
+
+downloadBtn.addEventListener("click", () => {
+  table2excel.export(document.querySelectorAll("table"), dateElement.innerText);
 });
 
 async function generatePrecences() {
@@ -81,7 +99,7 @@ function generateDate() {
 
   const formattedDate = `${day} - ${month} - ${year}`;
 
-  document.getElementById("date").innerHTML = formattedDate;
+  dateElement.innerText = formattedDate;
 }
 
 function createHeadTable(date) {
@@ -118,5 +136,3 @@ function createValueTable(precences, date) {
     tRow.innerHTML = tableColumn;
   });
 }
-
-
